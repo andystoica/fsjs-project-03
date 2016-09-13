@@ -143,6 +143,15 @@ button:hover {
   Helper Classes
 ==================================== */
 
+.error {
+  color: #9b3055;
+  font-weight: 500;
+}
+
+p.error {
+  margin-top: 0;
+}
+
 .is-hidden {
 	display: none;
 }

@@ -1,5 +1,5 @@
 /**
- * HTML snippets
+ * HTML snippets and messages
  */
 
 var colorsJsPuns  = '<option value="cornflowerblue">Cornflower Blue</option>' +
@@ -8,11 +8,20 @@ var colorsJsPuns  = '<option value="cornflowerblue">Cornflower Blue</option>' +
 var colorsHeartJs = '<option value="tomato">Tomato</option>' +
                     '<option value="steelblue">Steel Blue</option>' +
                     '<option value="dimgrey">Dim Grey</option>';
+var errName       = ['Name:', 'Please provide your name'];
+var errEmail      = ['Email:', 'Please provide a valid email address'];
+var errTshirt     = 'Don\'t forget to pick a T-Shirt';
+var errActivities = 'Please select an activity';
+var errPayment    = 'Please select a payment method';
+var emailRegEx    = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+
+
+
 
 
 /**
- * Collect events data and store into an index array of objects
- * with following fields: index, name, description, time, price
+ * Collect events data and store into an associative array of objects
+ * using name as key and the following fields: description, price, time
  *
  * Return: associative array of event objects
  */
@@ -34,6 +43,10 @@ function collectEvents() {
   return events;
 }
 
+
+
+
+
 /**
  * Calculate costs of selected events
  *
@@ -48,6 +61,9 @@ function calculateCost(eventList) {
   });
   return totalCost;
 }
+
+
+
 
 
 /**
@@ -75,6 +91,9 @@ function checkConflicts(eventList, anEvent) {
 }
 
 
+
+
+
 /**
  * Disables event in the option list
  * Param: eventName - String
@@ -83,6 +102,9 @@ function disableEvent(eventName) {
   $('input[name="' + eventName + '"]').attr("disabled", true);
   $('input[name="' + eventName + '"]').parent().addClass('disabled');
 }
+
+
+
 
 
 /**
@@ -98,6 +120,109 @@ function enableEvent(eventName) {
 
 
 
+/**
+ * Clears all form validation errors
+ */
+function clearErrors() {
+  $('label').removeClass('error');
+  $('label[for="name"]').text(errName[0]);
+  $('label[for="mail"]').text(errEmail[0]);
+  $('p.error').remove();
+}
+
+
+
+
+
+/**
+ * Credit card number validator
+ * Author: Diego Salazar
+ * Source: https://gist.github.com/DiegoSalazar/4075533
+ */
+ function validCreditCard(value) {
+  // Accept only digits, dashes or spaces
+ 	if (value.match(/[^0-9-\s]+/)) {
+    return false;
+  }
+
+ 	// The Luhn Algorithm. It's so pretty.
+ 	var nCheck = 0, nDigit = 0, bEven = false;
+ 	value = value.replace(/\D/g, "");
+
+ 	for (var n = value.length - 1; n >= 0; n--) {
+ 		var cDigit = value.charAt(n),
+ 			  nDigit = parseInt(cDigit, 10);
+
+ 		if (bEven) {
+ 			if ((nDigit *= 2) > 9) {
+        nDigit -= 9;
+      }
+ 		}
+
+ 		nCheck += nDigit;
+ 		bEven = !bEven;
+ 	}
+ 	return (nCheck % 10) === 0;
+ }
+
+
+
+
+
+/**
+ * Form valiadator
+ */
+function validateForm() {
+  clearErrors();
+  var valid = true;
+  // NAME should not be empty
+  if ($('#name').val().length === 0) {
+    $('label[for="name"]').addClass('error').text(errName[1]);
+    valid = false;
+  }
+
+  // EMAIL should be a valid address
+  if (!$('#mail').val().match(emailRegEx)) {
+    $('label[for="mail"]').addClass('error').text(errEmail[1]);
+    valid = false;
+  }
+
+  // At least one ACTIVITY is selected
+  var isSelected = false;
+  $('.activities input[type=checkbox]').each(function(){
+    isSelected = isSelected || $(this).is(':checked');
+  });
+  if (!isSelected) {
+    $("<p></p>").text(errActivities).addClass('error').insertAfter('.activities legend');
+    valid = false;
+  }
+
+  // PAYMENT option should be selected
+  if ($('#payment').val() === "select_method") {
+    $("<p></p>").text(errPayment).addClass('error').insertAfter('.payment legend');
+    valid = false;
+  }
+
+  // CREDIT CARD fileds shold be filled in and valid
+  if ($('#payment').val() === "credit card") {
+    if ($('#cc-num').val().length < 1 || !validCreditCard($('#cc-num').val())) {
+      $('label[for="cc-num"]').addClass('error');
+      valid = false;
+    }
+    if (!$('#zip').val().match(/^\d{5}(?:[-\s]\d{4})?$/)) {
+      $('label[for="zip"]').addClass('error');
+      valid = false;
+    }
+    if (!$('#cvv').val().match(/\d{3}/)) {
+      $('label[for="cvv"]').addClass('error');
+      valid = false;
+    }
+  }
+
+  return valid;
+}
+
+
 
 
 
@@ -105,13 +230,16 @@ function enableEvent(eventName) {
  * Enhanced form behaviour
  */
 function enhanceForm() {
+
+  //// BASIC INFO
+  ///
   // Focus on the first field when the page loads
   $('#name').focus();
 
   // Hide the Job Title field when JavaScript is working
   $('#other-title').hide();
 
-  // When job role is changed, tf "other" is selected,
+  // When job role is changed, if "other" is selected,
   // show the "other-title" field, otherwise hide it
   $('#title').change(function(){
     if ($(this).val().toLowerCase() === 'other') {
@@ -121,11 +249,13 @@ function enhanceForm() {
     }
   });
 
+  //// T-SHIRT INFO
+  ///
   // Hide the color section on page load
   $('#colors-js-puns').hide();
 
   // Show the correct color selection sub menu when the user
-  // selects a new theme or remove the color selection of no
+  // selects a new theme or remove the color selection if no
   // theme is chosen
   $('#design').change(function(){
     switch($(this).val().toLowerCase()) {
@@ -143,6 +273,8 @@ function enhanceForm() {
     }
   });
 
+  //// REGISTER FOR ACTIVITIES
+  ///
   // Disable conflicting activities, calculate total price
   // for all selected events and update the messags
   var eventList = collectEvents();
@@ -151,10 +283,10 @@ function enhanceForm() {
     var isChecked = $(this).is(':checked');
     var conflicts = checkConflicts(eventList, eventName);
 
-    // Iterate through all conflicts, if any and deal with them
+    // Iterate through all conflicts, if any, and deal with them
     for (var i = 0; i < conflicts.length; i++) {
       // If the control is checked, then disable the conflicts
-      // other wise enable the conflincting event
+      // otherwise enable the conflincting events
       if (isChecked) {
         disableEvent(conflicts[i]);
       } else {
@@ -164,7 +296,7 @@ function enhanceForm() {
 
     // Calculate and update the total cost
     var totalCost = calculateCost(eventList);
-    // If the cost is larger than 0, update the cost
+    // If the cost is larger than 0, update the cost heading
     if (totalCost > 0) {
       // If the total heading exists, then update
       // otherwise create a new element and append to the form
@@ -179,6 +311,8 @@ function enhanceForm() {
     }
   });
 
+  //// PAYMENT INFO
+  ///
   // Display appropriate content for the selected payment method
   $('#payment').change(function(){
     $(this).siblings('div').hide();
@@ -198,7 +332,14 @@ function enhanceForm() {
   // Select Credit Card option when the page loads
   $('#payment option').eq(1).prop('selected', true).change();
 
+  //// FORM validation
+  ///
+  // Validate form on pressing the submit button
+  $('button[type="submit"]').click(function(e){
+    if (!validateForm()) {
+      e.preventDefault();
+    }
+  });
 }
-
 
 enhanceForm();
