@@ -1,1 +1,1 @@
-$("#name").focus();
+$("#name").focus(),$("#other-title").hide(),$("#title").change(function(){"other"===$(this).val().toLowerCase()?$("#other-title").show():$("#other-title").hide()});
