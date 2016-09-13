@@ -178,6 +178,26 @@ function enhanceForm() {
       $('h4.total-cost').remove();
     }
   });
+
+  // Display appropriate content for the selected payment method
+  $('#payment').change(function(){
+    $(this).siblings('div').hide();
+    switch ($(this).val()) {
+      case 'credit card':
+        $('#credit-card').show();
+        break;
+      case 'paypal':
+        $('#paypal').show();
+        break;
+      case 'bitcoin':
+        $('#bitcoin').show();
+        break;
+    }
+  });
+
+  // Select Credit Card option when the page loads
+  $('#payment option').eq(1).prop('selected', true).change();
+
 }
 
 
