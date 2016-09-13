@@ -85,7 +85,8 @@ select {
 	margin-bottom: 1.125em;
 }
 
-input {
+input,
+select {
 	font-size: 1em;
 	font-weight: 500;
 	padding: .8em;
@@ -94,8 +95,20 @@ input {
 	outline: none;
 }
 
-input:focus {
-	background: #fff;
+select {
+  width: 100%;
+  padding-right: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("../images/icon-down-arrow.svg") right 15px center no-repeat;
+  background-color: #c1deeb;
+  background-size: 20px;
+  border-radius: 0;
+}
+
+input:focus,
+select:focus {
+	background-color: #fff;
 	border-color: #5e97b0;
 	transition: border-color .4s, background-color .4s;
 }
