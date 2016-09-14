@@ -1,5 +1,7 @@
+'use strict';
+
 /**
- * HTML snippets and messages
+ * HTML snippets and global variables
  */
 
 var colorsJsPuns  = '<option value="cornflowerblue">Cornflower Blue</option>' +
@@ -10,11 +12,9 @@ var colorsHeartJs = '<option value="tomato">Tomato</option>' +
                     '<option value="dimgrey">Dim Grey</option>';
 var errName       = ['Name:', 'Please provide your name'];
 var errEmail      = ['Email:', 'Please provide a valid email address'];
-var errTshirt     = 'Don\'t forget to pick a T-Shirt';
 var errActivities = 'Please select an activity';
 var errPayment    = 'Please select a payment method';
 var emailRegEx    = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-
 
 
 
@@ -46,7 +46,6 @@ function collectEvents() {
 
 
 
-
 /**
  * Calculate costs of selected events
  *
@@ -61,7 +60,6 @@ function calculateCost(eventList) {
   });
   return totalCost;
 }
-
 
 
 
@@ -93,7 +91,6 @@ function checkConflicts(eventList, anEvent) {
 
 
 
-
 /**
  * Disables event in the option list
  * Param: eventName - String
@@ -106,7 +103,6 @@ function disableEvent(eventName) {
 
 
 
-
 /**
  * Enables event in the option list
  * Param: eventName - String
@@ -115,7 +111,6 @@ function enableEvent(eventName) {
   $('input[name="' + eventName + '"]').removeAttr("disabled");
   $('input[name="' + eventName + '"]').parent().removeClass('disabled');
 }
-
 
 
 
@@ -133,38 +128,49 @@ function clearErrors() {
 
 
 
-
 /**
- * Credit card number validator
- * Author: Diego Salazar
- * Source: https://gist.github.com/DiegoSalazar/4075533
+ * Credit card number validator using
+ * the Luhn Alogorithm
  */
- function validCreditCard(value) {
+function validCC(aNumber) {
   // Accept only digits, dashes or spaces
- 	if (value.match(/[^0-9-\s]+/)) {
+  if (aNumber.match(/[^0-9-\s]+/)) {
     return false;
   }
 
- 	// The Luhn Algorithm. It's so pretty.
- 	var nCheck = 0, nDigit = 0, bEven = false;
- 	value = value.replace(/\D/g, "");
+  // Minimum 13 characters (shortest credit card number)
+  if (aNumber.length < 13) {
+    return false;
+  }
 
- 	for (var n = value.length - 1; n >= 0; n--) {
- 		var cDigit = value.charAt(n);
- 			  nDigit = parseInt(cDigit, 10);
+  // Remove all non digits and spaces
+  aNumber = aNumber.replace(/\D/g, "");
 
- 		if (bEven) {
- 			if ((nDigit *= 2) > 9) {
-        nDigit -= 9;
+  // The Luhn Algorithm
+  var controlDigit = parseInt(aNumber.charAt(aNumber.length - 1));
+  var controlSum   = 0;
+  var currentDigit = 0;
+  var counter      = 1;
+
+  // Iterate backwords from second last to first digit
+  for (var i = aNumber.length - 2; i >= 0; i--) {
+    currentDigit = parseInt(aNumber.charAt(i));
+
+    // Multipley odd digits by 2 and subtract 9 of larger than 9
+    if (counter % 2) {
+      if ((currentDigit *= 2) > 9) {
+        currentDigit -= 9;
       }
- 		}
+    }
 
- 		nCheck += nDigit;
- 		bEven = !bEven;
- 	}
- 	return (nCheck % 10) === 0;
- }
+    // Add them to the control sum
+    controlSum += currentDigit;
+    counter++;
+  }
 
+  // True if the modulo 10 matches the last digit
+  return (controlSum % 10) === controlDigit;
+}
 
 
 
@@ -205,7 +211,7 @@ function validateForm() {
 
   // CREDIT CARD fileds shold be filled in and valid
   if ($('#payment').val() === "credit card") {
-    if ($('#cc-num').val().length < 1 || !validCreditCard($('#cc-num').val())) {
+    if ($('#cc-num').val().length < 1 || !validCC($('#cc-num').val())) {
       $('label[for="cc-num"]').addClass('error');
       valid = false;
     }
@@ -221,7 +227,6 @@ function validateForm() {
 
   return valid;
 }
-
 
 
 
