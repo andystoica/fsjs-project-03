@@ -1,4 +1,4 @@
-'use strict';
+// "use strict";
 
 /**
  * HTML snippets and global variables
@@ -10,10 +10,10 @@ var colorsJsPuns  = '<option value="cornflowerblue">Cornflower Blue</option>' +
 var colorsHeartJs = '<option value="tomato">Tomato</option>' +
                     '<option value="steelblue">Steel Blue</option>' +
                     '<option value="dimgrey">Dim Grey</option>';
-var errName       = ['Name:', 'Please provide your name'];
-var errEmail      = ['Email:', 'Please provide a valid email address'];
-var errActivities = 'Please select an activity';
-var errPayment    = 'Please select a payment method';
+var errName       = ['Name:', 'Please provide your name:'];
+var errEmail      = ['Email:', 'Please provide a valid email address:'];
+var errActivities = 'Please select an activity:';
+var errPayment    = 'Please select a payment method:';
 var emailRegEx    = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
 
 
@@ -181,16 +181,19 @@ function validCC(aNumber) {
 function validateForm() {
   clearErrors();
   var valid = true;
+  var firstError;
   // NAME should not be empty
   if ($('#name').val().length === 0) {
     $('label[for="name"]').addClass('error').text(errName[1]);
     valid = false;
+    if (!firstError) firstError = 'label[for="name"]';
   }
 
   // EMAIL should be a valid address
   if (!$('#mail').val().match(emailRegEx)) {
     $('label[for="mail"]').addClass('error').text(errEmail[1]);
     valid = false;
+    if (!firstError) firstError = 'label[for="mail"]';
   }
 
   // At least one ACTIVITY is selected
@@ -201,12 +204,14 @@ function validateForm() {
   if (!isSelected) {
     $("<p></p>").text(errActivities).addClass('error').insertAfter('.activities legend');
     valid = false;
+    if (!firstError) firstError = '.activities label';
   }
 
   // PAYMENT option should be selected
   if ($('#payment').val() === "select_method") {
     $("<p></p>").text(errPayment).addClass('error').insertAfter('.payment legend');
     valid = false;
+    if (!firstError) firstError = '.payment label';
   }
 
   // CREDIT CARD fileds shold be filled in and valid
@@ -223,6 +228,11 @@ function validateForm() {
       $('label[for="cvv"]').addClass('error');
       valid = false;
     }
+  }
+
+  // Scroll up to first error
+  if (!valid) {
+    $(firstError).focus();
   }
 
   return valid;
@@ -248,7 +258,7 @@ function enhanceForm() {
   // show the "other-title" field, otherwise hide it
   $('#title').change(function(){
     if ($(this).val().toLowerCase() === 'other') {
-      $('#other-title').show();
+      $('#other-title').show().focus();
     } else {
       $('#other-title').hide();
     }

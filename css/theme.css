@@ -1,0 +1,115 @@
+/* =================================
+  Base Element Styles
+==================================== */
+
+body {
+  color: #1d5554;
+	background: #38a09e;
+  font-weight: lighter;
+}
+
+header {
+	text-align: center;
+}
+
+header span {
+  color: #edeeef;
+  font-size: 1.2em;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+h1 {
+	font-size: 4.5em;
+  font-weight: lighter;
+	text-shadow: none;
+  color: #edeeef;
+  text-transform: uppercase;
+
+}
+
+/* =================================
+  Form Element Styles
+==================================== */
+
+form {
+  margin-bottom: 4em;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+fieldset:nth-of-type(n+2) {
+	margin-top: 2.5em;
+}
+
+legend,
+button {
+  color: #38a09e;
+}
+
+legend {
+  margin-bottom: 1.5em;
+  text-transform: uppercase;
+  font-size: 0.9em;
+	border-top: 2px solid rgba(56, 160, 158, 0.5);
+}
+
+label {
+	color: #333;
+}
+
+label.disabled {
+  color: #ccc;
+}
+
+input,
+select {
+  font-size: 1em;
+  font-weight: 500;
+  padding: .8em;
+  outline: none;
+	background: rgba(56, 160, 158, 0.3);
+	border: 2px solid rgba(56, 160, 158, 0.2);
+  color: #1d5554;
+  border-radius: 3px;
+}
+
+select {
+  width: 100%;
+  padding-right: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("../images/icon-down-arrow.svg") right 15px center no-repeat;
+  background-color: rgba(56, 160, 158, 0.3);
+  background-size: 20px;
+}
+
+input:focus,
+select:focus {
+	background-color: #fff;
+	border-color: #38a09e;
+}
+
+button {
+	color: #fff;
+	background: #1d5554;
+  text-transform: uppercase;
+  font-weight: normal;
+  width: 100%;
+  border-radius: 3px;
+  transition: background .3s;
+}
+
+button:hover {
+	background: #38a09e;
+}
+
+/* =================================
+  Helper Classes
+==================================== */
+
+.error {
+  color: #c43237;
+  font-weight: 500;
+}

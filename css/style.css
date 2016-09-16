@@ -1,4 +1,4 @@
-/* =================================
+/* ================================= 
   Base Element Styles
 ==================================== */
 
@@ -19,7 +19,7 @@ body {
 }
 
 header {
-	text-align: center;
+	text-align: center;  
 }
 
 h1 {
@@ -32,7 +32,7 @@ a {
   text-decoration: none;
 }
 
-/* =================================
+/* ================================= 
   Form Element Styles
 ==================================== */
 
@@ -54,7 +54,7 @@ fieldset {
 
 legend,
 button {
-	font-size: 1.25em;
+	font-size: 1.25em;	
 }
 
 legend {
@@ -76,17 +76,12 @@ label {
 	margin-bottom: .5em;
 }
 
-label.disabled {
-  color: #679cb3;
-}
-
 input,
 select {
-	margin-bottom: 1.125em;
+	margin-bottom: 1.125em;	
 }
 
-input,
-select {
+input {
 	font-size: 1em;
 	font-weight: 500;
 	padding: .8em;
@@ -95,20 +90,8 @@ select {
 	outline: none;
 }
 
-select {
-  width: 100%;
-  padding-right: 40px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: url("../images/icon-down-arrow.svg") right 15px center no-repeat;
-  background-color: #c1deeb;
-  background-size: 20px;
-  border-radius: 0;
-}
-
-input:focus,
-select:focus {
-	background-color: #fff;
+input:focus {
+	background: #fff;
 	border-color: #5e97b0;
 	transition: border-color .4s, background-color .4s;
 }
@@ -130,7 +113,7 @@ button:hover {
 	background: #184c62;
 }
 
-/* =================================
+/* ================================= 
   Page Styles
 ==================================== */
 
@@ -152,18 +135,9 @@ button:hover {
 	margin-top: 1.25em;
 }
 
-/* =================================
+/* ================================= 
   Helper Classes
 ==================================== */
-
-.error {
-  color: #9b3055;
-  font-weight: 500;
-}
-
-p.error {
-  margin-top: 0;
-}
 
 .is-hidden {
 	display: none;
@@ -175,7 +149,7 @@ p.error {
   clear: both;
 }
 
-/* =================================
+/* ================================= 
   Media Queries
 ==================================== */
 
