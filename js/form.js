@@ -326,6 +326,9 @@ function enhanceForm() {
     }
   });
 
+  // Wrap all checkbox labels in span element to apply custom styling
+  $('input[type=checkbox]')
+
   //// PAYMENT INFO
   ///
   // Display appropriate content for the selected payment method

@@ -1,138 +1,129 @@
 /* =================================
+  Theme Colors
+==================================== */
+/* =================================
   Base Element Styles
 ==================================== */
-
 body {
-  color: #1d5554;
-	background: #38a09e;
-  font-weight: lighter;
-}
+  color: #174241;
+  background: #38a09e;
+  font-weight: lighter; }
 
 header {
-	text-align: center;
-}
-
-header span {
-  color: #edeeef;
-  font-size: 1.2em;
-  display: inline-block;
-  padding-bottom: 5px;
-}
+  text-align: center; }
+  header span {
+    color: #e1f1f0;
+    font-size: 1.2em;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-transform: lowercase;
+    letter-spacing: 1em;
+    margin-bottom: 1em; }
 
 h1 {
-	font-size: 4.5em;
+  font-size: 2.5em;
   font-weight: lighter;
-	text-shadow: none;
-  color: #edeeef;
-  text-transform: uppercase;
+  text-shadow: none;
+  color: #e1f1f0;
+  text-transform: uppercase; }
+  @media (min-width: 680px) {
+    h1 {
+      font-size: 4.5em; } }
 
-}
+h4 {
+  color: #246766; }
 
 /* =================================
   Form Element Styles
 ==================================== */
-
 form {
   margin-bottom: 4em;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1);
-}
+  background: #e1f1f0;
+  box-shadow: 3px 3px 5px 0 rgba(29, 85, 84, 0.2); }
 
 fieldset:nth-of-type(n+2) {
-	margin-top: 2.5em;
-}
-
-legend,
-button {
-  color: #38a09e;
-}
+  margin-top: 2.5em; }
 
 legend {
+  color: #38a09e;
   margin-bottom: 1.5em;
   text-transform: uppercase;
   font-size: 0.9em;
-	border-top: 2px solid rgba(56, 160, 158, 0.5);
-}
-
-label {
-	color: #333;
-}
-
-label.disabled {
-  color: #ccc;
-}
+  border-top: 2px solid rgba(56, 160, 158, 0.6); }
 
 input,
 select {
-  font-size: 1em;
-  font-weight: 500;
-  padding: .8em;
-  outline: none;
-	background: rgba(56, 160, 158, 0.3);
-	border: 2px solid rgba(56, 160, 158, 0.2);
-  color: #1d5554;
-  border-radius: 3px;
-}
-
-select {
-  width: 100%;
-  padding-right: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: url("../images/icon-down-arrow.svg") right 15px center no-repeat;
-  background-color: rgba(56, 160, 158, 0.3);
-  background-size: 20px;
-}
+  outline: none;
+  padding: .8em;
+  font-size: 1em;
+  font-weight: 500;
+  background: #bce8e7;
+  border: 2px solid rgba(56, 160, 158, 0.2);
+  color: #1d5554;
+  border-radius: 3px; }
+  input:focus,
+  select:focus {
+    background-color: #f8f8f8;
+    border-color: rgba(56, 160, 158, 0.5); }
 
-input:focus,
-select:focus {
-	background-color: #fff;
-	border-color: #38a09e;
-}
+select {
+  min-width: 100%;
+  padding-right: 40px;
+  background: url("../images/icon-down-arrow.svg") right 15px center no-repeat;
+  background-color: #bce8e7;
+  background-size: 20px; }
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: none; }
+
+input[type="checkbox"] + span::before {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(56, 160, 158, 0.4);
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 3px;
+  background: #bce8e7;
+  transition: all .1s;
+  content: ""; }
+
+input[type="checkbox"]:checked + span::before {
+  background-image: url("../images/icon-tick-box.svg");
+  background-position: center center;
+  background-repeat: no-repeat; }
+
+label {
+  color: #174241; }
 
 button {
-	color: #fff;
-	background: #1d5554;
-  text-transform: uppercase;
-  font-weight: normal;
   width: 100%;
   border-radius: 3px;
-  transition: background .3s;
-}
-
-button:hover {
-	background: #38a09e;
-}
+  background: #246766;
+  color: #f8f8f8;
+  text-transform: uppercase;
+  font-weight: normal;
+  box-shadow: 0px 2px 0px 0 rgba(29, 85, 84, 0.2);
+  transition: background .3s; }
+  button:hover {
+    background: #38a09e; }
 
 .activities label {
-  clear: left;
+  position: relative;
   line-height: 1.5;
-  margin-bottom: 1em;
-}
-
-.activities input[type="checkbox"] {
-  float: left;
-  margin-right: 15px;
-}
-
-/* =================================
-  Helper Classes
-==================================== */
+  margin-bottom: 1.5 em;
+  padding-left: 30px; }
+  .activities label.disabled {
+    color: #84d4d2; }
+    .activities label.disabled input[type="checkbox"] + span::before {
+      border: 2px solid rgba(56, 160, 158, 0.2);
+      background: #e1f1f0; }
 
 .error {
   color: #c43237;
-  font-weight: 500;
-}
-
-/* =================================
-  Media Queries
-==================================== */
-
-@media (min-width: 0) and (max-width: 679px) {
-  h1 {
-    font-size: 2.5em;
-  }
-
-
-}
+  font-weight: 500; }
