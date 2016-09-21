@@ -186,14 +186,18 @@ function validateForm() {
   if ($('#name').val().length === 0) {
     $('label[for="name"]').addClass('error').text(errName[1]);
     valid = false;
-    if (!firstError) firstError = 'label[for="name"]';
+    if (!firstError) {
+      firstError = 'label[for="name"]';
+    }
   }
 
   // EMAIL should be a valid address
   if (!$('#mail').val().match(emailRegEx)) {
     $('label[for="mail"]').addClass('error').text(errEmail[1]);
     valid = false;
-    if (!firstError) firstError = 'label[for="mail"]';
+    if (!firstError) {
+     firstError = 'label[for="mail"]';
+    }
   }
 
   // At least one ACTIVITY is selected
@@ -204,14 +208,18 @@ function validateForm() {
   if (!isSelected) {
     $("<p></p>").text(errActivities).addClass('error').insertAfter('.activities legend');
     valid = false;
-    if (!firstError) firstError = '.activities label';
+    if (!firstError) {
+      firstError = '.activities label';
+    }
   }
 
   // PAYMENT option should be selected
   if ($('#payment').val() === "select_method") {
     $("<p></p>").text(errPayment).addClass('error').insertAfter('.payment legend');
     valid = false;
-    if (!firstError) firstError = '.payment label';
+    if (!firstError) {
+      firstError = '.payment label';
+    }
   }
 
   // CREDIT CARD fileds shold be filled in and valid
@@ -325,9 +333,6 @@ function enhanceForm() {
       $('h4.total-cost').remove();
     }
   });
-
-  // Wrap all checkbox labels in span element to apply custom styling
-  $('input[type=checkbox]')
 
   //// PAYMENT INFO
   ///
