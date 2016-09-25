@@ -169,7 +169,7 @@ function validCC(aNumber) {
   }
 
   // True if the modulo 10 matches the last digit
-  return (controlSum % 10) === controlDigit;
+  return ((controlSum + controlDigit) % 10) === 0;
 }
 
 
